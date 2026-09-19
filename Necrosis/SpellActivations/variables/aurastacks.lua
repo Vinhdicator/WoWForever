@@ -140,6 +140,12 @@ bucket:setAuraStacks(stacks)
 end
 end or nil,
 UNIT_AURA=SAO.AURASTACKS.MODERN and function(unitTarget,updateInfo)
+-- Midnight (12.0) taints every updateInfo field (isFullUpdate, addedAuras,
+-- updatedAuraInstanceIDs, removedAuraInstanceIDs) with secret values; any read,
+-- boolean test, or ipairs on them throws while tainted. Run the entire handler
+-- inside pcall so a secret payload just skips this aura update instead of
+-- erroring in combat.
+local ok, err = pcall(function()
 if not UnitIsUnit(unitTarget, "player")then
 return
 end
@@ -216,6 +222,10 @@ end
 addAura(auraInstanceID,aura,bucket)
 end
 end
+end
+end)
+if not ok then
+SAO:Debug(Module, "UNIT_AURA aura-stacks update skipped (secret/tainted payload): "..tostring(err))
 end
 end or nil,
 },
