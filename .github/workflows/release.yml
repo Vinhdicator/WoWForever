@@ -13,12 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The addon source lives in the Necrosis/ subfolder, but the BigWigs
+      # packager only discovers a .toc at the checkout root. Create a root
+      # Necrosis.toc symlink into the subfolder so discovery succeeds while the
+      # addon stays in Necrosis/.
+      - name: Link addon TOC to repo root for packager
+        run: |
+          ln -s Necrosis/Necrosis.toc Necrosis.toc
+          # Also link each per-flavor TOC so all game versions are detected.
+          for f in Necrosis/Necrosis_*.toc Necrosis/Necrosis-*.toc; do
+            [ -e "$f" ] && ln -s "$f" "$(basename "$f")"
+          done
+          ls -l *.toc
+
       - name: Package and release with BigWigs packager
         uses: BigWigsMods/packager@v2
-        # Runs at the repo/checkout root (where .git and .pkgmeta live).
-        # .pkgmeta uses move-folders to bring the Necrosis/ subfolder up to the
-        # package root so the per-flavor .toc files are found and every
-        # supported game version is auto-detected (no -g flags).
+        # Runs at the repo/checkout root. No -g flags: the per-flavor .toc files
+        # let the packager auto-detect every supported game version.
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           # Uncomment and add these secrets to publish to CurseForge/Wago:
