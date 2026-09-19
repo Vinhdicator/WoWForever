@@ -28,4 +28,8 @@ max_line_length = false
 ignore = {
   "212/self", -- unused 'self' argument is idiomatic in WoW frame scripts
   "631",      -- line too long (handled by max_line_length = false)
+  "113",      -- accessing undefined variable: cross-file addon globals (frames,
+              -- constants like NECROSIS_ID, AFKS_*) are defined in other files
+              -- and wired up by the WoW client at load time; not enumerable here.
+  "122",      -- mutating non-standard global: addon sets fields on its own frames.
 }
