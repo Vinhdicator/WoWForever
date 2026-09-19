@@ -273,7 +273,7 @@ Notes:
 	
 	-- ::: Buffs
 	-- Demon Armor/Skin do NOT exist as castable buffs in MOP (became passive)
-	--[[ Demon Armor (Passive in MOP)
+	-- Demon Armor (Passive in MOP)
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon
 	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
@@ -284,12 +284,10 @@ Notes:
 	[27260] = {UsageRank = 8, SpellRank = 6, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[47793] = {UsageRank = 9, SpellRank = 7, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[47889] = {UsageRank = 10, SpellRank = 8, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
-	]]
  	
 	-- Fel Armor does NOT exist in MOP (became passive or removed)
-	--[[ Fel Armor (Passive in MOP)
+	-- Fel Armor (Passive in MOP)
 	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	]]
 	--
 	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, DefaultSelf = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
@@ -867,13 +865,15 @@ Necrosis.Warlock_Lists = {
 -- 31=Demon Armor | 47=Fel Armor | 32=Unending Breath | 33=Detect Invis | 34=Eye of Kilrogg | 37=Ritual of Summoning | 38=Soul Link | 43=Shadow Ward | 35=Enslave Demon | 59=Demonic Empowerment | 9=Banish
 --	local buffID = {31, 47, 32, 33, 34, 37, 38, 43, 59, 9}
 	["buffs"] = {
-		[1] = {f_ptr = "breath", high_of = "breath", },
-		[2] = {f_ptr = "invis", high_of = "invisible", },  -- f_ptr="invis" refers to Warlock_Buttons.invis, high_of="invisible" refers to SpellIDMap.invisible
-		[3] = {f_ptr = "eye", high_of = "eye", },
-		[4] = {f_ptr = "summoning", high_of = "summoning", },
-		[5] = {f_ptr = "ward", high_of = "dark_pact", },
-		[6] = {f_ptr = "banish", high_of = "banish", },
-		[7] = {f_ptr = "enslave", high_of = "enslave", },
+		[1] = {f_ptr = "armor", high_of = "armor", },  -- Demon Skin / Demon Armor (rank 1)
+		[2] = {f_ptr = "fel_armor", high_of = "fel_armor", },  -- Demon Armor / Fel Armor
+		[3] = {f_ptr = "breath", high_of = "breath", },
+		[4] = {f_ptr = "invis", high_of = "invisible", },  -- f_ptr="invis" refers to Warlock_Buttons.invis, high_of="invisible" refers to SpellIDMap.invisible
+		[5] = {f_ptr = "eye", high_of = "eye", },
+		[6] = {f_ptr = "summoning", high_of = "summoning", },
+		[7] = {f_ptr = "ward", high_of = "dark_pact", },
+		[8] = {f_ptr = "banish", high_of = "banish", },
+		[9] = {f_ptr = "enslave", high_of = "enslave", },
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
@@ -910,13 +910,15 @@ Necrosis.Warlock_Lists = {
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList
 	["config_main_spell"] = {
-		[1] = {high_of = "death_coil", },
-		[2] = {high_of = "summoning", },
-		[3] = {high_of = "life_tap", },
-		[4] = {high_of = "dark_pact", },
-		[5] = {high_of = "soul_swap", },
-		[6] = {high_of = "dark_intent", },
-		[7] = {high_of = "banish", },
+		[1] = {high_of = "armor", },  -- Demon Skin / Demon Armor (Rank 1)
+		[2] = {high_of = "fel_armor", },  -- Demon Armor / Fel Armor
+		[3] = {high_of = "death_coil", },
+		[4] = {high_of = "summoning", },
+		[5] = {high_of = "life_tap", },
+		[6] = {high_of = "dark_pact", },
+		[7] = {high_of = "soul_swap", },
+		[8] = {high_of = "dark_intent", },
+		[9] = {high_of = "banish", },
 	},
 	["sacrifice"] = { -- demoniac sacrifice
 		[1]  = {f_ptr = "imp", high_of = "sacrifice_demonic_Imp", },

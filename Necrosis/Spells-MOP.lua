@@ -263,7 +263,7 @@ Notes:
 	
 	-- ::: Buffs
 	-- Demon Armor/Skin do NOT exist as castable buffs in MOP (became passive)
-	--[[ Demon Armor (Passive in MOP)
+	-- Demon Armor (Passive in MOP)
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon
 	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
@@ -274,12 +274,10 @@ Notes:
 	[27260] = {UsageRank = 8, SpellRank = 6, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[47793] = {UsageRank = 9, SpellRank = 7, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
 	[47889] = {UsageRank = 10, SpellRank = 8, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
-	]]
  	
 	-- Fel Armor does NOT exist in MOP (became passive or removed)
-	--[[ Fel Armor (Passive in MOP)
+	-- Fel Armor (Passive in MOP)
 	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	]]
 	--
 	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
@@ -856,13 +854,15 @@ Necrosis.Warlock_Lists = {
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList
 	["config_main_spell"] = {
-		[1] = {high_of = "death_coil", },
-		[2] = {high_of = "summoning", },
-		[3] = {high_of = "life_tap", },
-		[4] = {high_of = "ward", },
-		[5] = {high_of = "soul_swap", },
-		[6] = {high_of = "dark_intent", },
-		[7] = {high_of = "banish", },
+		[1] = {high_of = "armor", },  -- Demon Armor
+		[2] = {high_of = "fel_armor", },  -- Fel Armor
+		[3] = {high_of = "death_coil", },
+		[4] = {high_of = "summoning", },
+		[5] = {high_of = "life_tap", },
+		[6] = {high_of = "ward", },
+		[7] = {high_of = "soul_swap", },
+		[8] = {high_of = "dark_intent", },
+		[9] = {high_of = "banish", },
 	},
 	["sacrifice"] = { -- demoniac sacrifice
 		[1]  = {f_ptr = "imp", high_of = "sacrifice_demonic_Imp", },
