@@ -273,7 +273,12 @@ hooksecurefunc(actionButton, "Update",HookActionButton_Update)
 end
 end
 else
+-- ActionButton_Update was removed in the Midnight (12.0) API. On clients where
+-- it no longer exists (e.g. the classic-era 1.60 beta), skip the hook instead of
+-- erroring. Midnight-UI clients are handled by the per-button Update hooks above.
+if type(ActionButton_Update) == "function" then
 hooksecurefunc("ActionButton_Update",HookActionButton_Update)
+end
 end
 local function HookStanceBar_UpdateState()
 local numForms=GetNumShapeshiftForms()
