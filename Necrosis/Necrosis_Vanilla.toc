@@ -1,6 +1,6 @@
-## Interface: 11508
+## Interface: 11601
 ## X-Min-Interface: 110207
-## X-Min-Interface-Classic: 11508
+## X-Min-Interface-Classic: 11508,11601
 ## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
 ## X-Min-Interface-Cata: 40400
