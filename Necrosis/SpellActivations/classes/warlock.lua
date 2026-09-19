@@ -251,6 +251,10 @@ self:AddOverlayLink(moltenCoreOrange,moltenCoreGreen)
 end
 end
 local function unitAura(self,unitTarget,updateInfo)
+-- Midnight (12.0) taints updateInfo fields with secret values; iterating
+-- updatedAuraInstanceIDs throws while tainted. Run the body in pcall and skip
+-- the update on a secret payload.
+local ok, err = pcall(function()
 if UnitIsUnit(unitTarget, "player")then
 if updateInfo and updateInfo.updatedAuraInstanceIDs then
 for _,id in ipairs(updateInfo.updatedAuraInstanceIDs)do
@@ -267,6 +271,10 @@ end
 end
 end
 end
+end
+end)
+if not ok then
+SAO:Debug(Module, "unitAura update skipped (secret/tainted payload): "..tostring(err))
 end
 end
 local function registerDecimation(self,rank)
