@@ -43,6 +43,7 @@ end
 local buildInfo=tonumber((select(2,GetBuildInfo())))
 hasMidnightUI=(SAO.IsTBC() and buildInfo >=65295)
 or (SAO.IsRetail() and LE_EXPANSION_LEVEL_CURRENT >=LE_EXPANSION_MIDNIGHT)
+or (SAO.IsEra() and buildInfo >=69913) -- classic-era 1.60 beta ships the Midnight UI
 return hasMidnightUI
 end
 function SAO.HasMidnightEvents()
