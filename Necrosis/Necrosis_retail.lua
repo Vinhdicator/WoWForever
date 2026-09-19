@@ -478,14 +478,21 @@ function UpdateIcons()
 
 		-- Update cooldown display - always check spell cooldown
 		-- Soulstone spell ID is 20707
-		-- Midnight (12.0) may return secret cooldown values; guard with pcall and
-		-- only set the spiral when the values are usable numbers.
+		-- Midnight (12.0) returns secret cooldown values: secrets pass
+		-- type()=="number" but throw on comparison AND on SetCooldown while
+		-- tainted. Do the read, the comparison, and SetCooldown all inside pcall;
+		-- on any secret/taint failure just clear the spiral.
 		if f.cooldown then
-			local ok, startTime, duration, isEnabled = pcall(GetSpellCooldown, 20707)
-			if ok and type(startTime) == "number" and startTime > 0 and type(duration) == "number" and duration > 0 then
-				f.cooldown:SetCooldown(startTime, duration)
-			else
-				f.cooldown:SetCooldown(0, 0)
+			local ok = pcall(function()
+				local startTime, duration = GetSpellCooldown(20707)
+				if startTime and startTime > 0 and duration and duration > 0 then
+					f.cooldown:SetCooldown(startTime, duration)
+				else
+					f.cooldown:SetCooldown(0, 0)
+				end
+			end)
+			if not ok then
+				pcall(function() f.cooldown:SetCooldown(0, 0) end)
 			end
 		end
 	end
@@ -2033,17 +2040,20 @@ function Necrosis:BuildButtonTooltip(button)
 			local coolText = ""
 			local coolTextShort = ""
 			-- Get spell cooldown (spell ID 20707 for Soulstone in MOP)
-			-- Midnight (12.0) returns "secret" cooldown values that cannot be
-			-- compared or used in arithmetic while tainted by an addon. Guard the
-			-- whole read so a secret startTime just shows no cooldown text instead
-			-- of throwing "attempt to compare local 'startTime'".
-			local ok, startTime, duration, isEnabled = pcall(GetSpellCooldown, 20707)
-			if not ok or type(startTime) ~= "number" or startTime == 0 then
-				-- not on cool down (or cooldown is secret/tainted)
-			else
-				local timeRemaining = ((startTime - GetTime()) + duration)
-				coolTextShort = Necrosis.Utils.TimeLeft(timeRemaining)
-				coolText = " (CD: "..coolTextShort..")"
+			-- Midnight (12.0) returns "secret" cooldown values. Secrets pass
+			-- type()=="number" but throw on comparison AND arithmetic while tainted
+			-- by an addon, so do the entire read + math inside one pcall. On any
+			-- secret/taint failure we just omit the cooldown text.
+			local ok, cool = pcall(function()
+				local startTime, duration = GetSpellCooldown(20707)
+				if startTime and startTime > 0 and duration and duration > 0 then
+					local timeRemaining = ((startTime - GetTime()) + duration)
+					return " (CD: "..Necrosis.Utils.TimeLeft(timeRemaining)..")"
+				end
+				return ""
+			end)
+			if ok and type(cool) == "string" then
+				coolText = cool
 			end
 
 			-- Update tooltip title with cooldown if it exists
