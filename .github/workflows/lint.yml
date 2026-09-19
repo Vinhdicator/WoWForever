@@ -19,11 +19,8 @@ jobs:
           sudo luarocks install luacheck
 
       - name: Run Luacheck
-        # continue-on-error: the addon references the WoW API (GameTooltip,
-        # CreateFrame, etc.) which is only defined inside the game client, so
-        # a stock Luacheck reports thousands of "undefined variable" warnings.
-        # We surface the report without failing the build.
-        continue-on-error: true
+        # Enforced: the WoW API surface is provided via wow_api_globals.lua,
+        # so only genuine problems (typos, undefined vars, unused locals) fail.
         run: luacheck Necrosis --config .luacheckrc --no-color
 
   stylua:
