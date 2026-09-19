@@ -1,4 +1,4 @@
-﻿-- Auto-generated from Ketho/vscode-wow-api (src/data/globalapi.ts + globals.ts).
+-- Auto-generated from Ketho/vscode-wow-api (src/data/globalapi.ts + globals.ts).
 -- WoW API globals so Luacheck does not flag them as undefined.
 return {
 	"_G",
