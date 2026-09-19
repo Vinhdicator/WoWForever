@@ -1,11 +1,9 @@
 std = "lua51"
 
--- WoW API surface: allow all read/write access to unknown globals.
--- WoW injects hundreds of globals (frames, API functions, SavedVariables)
--- at runtime, so we don't enumerate them. This config only catches
--- real problems: syntax errors, unused locals, shadowing, etc.
-not_globals = false
-read_globals = {}
+-- WoW injects its API (frames, functions, SavedVariables) as globals at
+-- runtime. std=lua51 already permits global access, so we don't enumerate
+-- the WoW API here. This config catches real problems: syntax errors,
+-- unused locals/variables, shadowing, and redefined locals.
 
 -- WoW addon globals and libraries this project references
 globals = {
