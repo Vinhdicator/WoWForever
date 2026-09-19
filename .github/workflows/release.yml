@@ -15,8 +15,11 @@ jobs:
 
       - name: Package and release with BigWigs packager
         uses: BigWigsMods/packager@v2
-        with:
-          args: -g retail -g classic -g classic_era
+        # No -g flags: the addon ships per-flavor .toc files (Necrosis.toc,
+        # Necrosis_Vanilla.toc, Necrosis_TBC.toc, Necrosis_Wrath.toc,
+        # Necrosis_Cata.toc, Necrosis_MOP.toc, plus retail), so the packager
+        # auto-detects every supported game version. Passing -g with a game
+        # type more than once (or an invalid type) makes it print usage & exit 1.
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           # Uncomment and add these secrets to publish to CurseForge/Wago:
