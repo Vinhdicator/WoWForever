@@ -82,7 +82,7 @@ SAO:RegisterEventHandler(self, "SPELLS_CHANGED", "Main init")
 if SAO.HasMidnightUI()then
 SAO:RegisterEventHandler(self, "LEARNED_SPELL_IN_SKILL_LINE", "Main init")
 else
-SAO:RegisterEventHandler(self, "LEARNED_SPELL_IN_TAB", "Main init")
+pcall(function() SAO:RegisterEventHandler(self, "LEARNED_SPELL_IN_TAB", "Main init") end)
 end
 SAO:RegisterEventHandler(self, "LOADING_SCREEN_DISABLED", "Main init")
 SAO:RegisterEventHandler(self, "PLAYER_LOGIN", "Main init")

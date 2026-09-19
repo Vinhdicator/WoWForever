@@ -81,15 +81,16 @@ Local.DefaultConfig = {
 		-- 8 = Doomguard
 		-- 9 = Enslave || Asservissement
 		-- 10 = Demonic Empowerment || Renforcement (was 11, Sacrifice removed)
-	BuffSpellPosition = {1, 2, 3, 4, 5, 6, 7, 8}, -- Retail: Detect Invisibility and Soul Link removed
-		-- 1 = Demon Armor || Armure
-		-- 2 = Fel Armor || Gangrarmure
+	BuffSpellPosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}, -- Retail: Detect Invisibility and Soul Link removed
+		-- 1 = Demon Armor || Armure (Demon Skin Rank 1)
+		-- 2 = Fel Armor || Gangrarmure (Demon Armor)
 		-- 3 = Unending Breath || Respiration
 		-- 4 = Eye of Kilrogg (was 5, Detect Invisibility removed)
 		-- 5 = Ritual of Summoning || TP (was 6, Detect Invisibility removed)
 		-- 6 = Shadow Ward || Protection contre l'ombre (was 8, Soul Link removed)
 		-- 7 = Demonic Empowerment || Renforcement démoniaque (was 9)
 		-- 8 = Banish || Bannir (was 10)
+		-- 9 = Enslave || Asservissement (was 11)
 	NecrosisToolTip = true,
 
 	MainSpell = "death_coil",
@@ -2781,19 +2782,25 @@ function Necrosis:BagExplore(arg)
 	end
 
 	-- Update stone / reagent counters
-	
-	
+
+
 	--if version est cata then
 	if select(4, GetBuildInfo()) < 40400 then
-		Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+		if Necrosis.Warlock_Lists.reagents.soul_shard.id then
+			Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) or 0
+		end
 	--sinon
-	else	
-	Local.Soulshard.Count = UnitPower("player", Enum.PowerType.SoulShards)
-	
+	else
+		if UnitPower then
+			Local.Soulshard.Count = UnitPower("player", Enum.PowerType.SoulShards) or 0
+		end
+
 	--fin
 	end
-	
-	Necrosis.Warlock_Lists.reagents.soul_shard.count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+
+	if Necrosis.Warlock_Lists.reagents.soul_shard.id then
+		Necrosis.Warlock_Lists.reagents.soul_shard.count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) or 0
+	end
 	
 
 
@@ -3289,25 +3296,8 @@ function Necrosis:CreateMenu()
 			for i = 1, #Local.Menu.Pet, 1 do
 				Local.Menu.Pet[i]:SetParent(f)
 				-- Close the menu when a child button is clicked || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state", "Ferme")
-					end
-				]])
-				f:WrapScript(Local.Menu.Pet[i], "OnEnter", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", true)
-					end
-				]])
-				f:WrapScript(Local.Menu.Pet[i], "OnLeave", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", false)
-						local stateMenu = self:GetParent():GetAttribute("state")
-						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-							self:GetParent():SetAttribute("state", "Refresh")
-						end
-					end
-				]])
+				-- Simplified for Forever Beta 160001 - menu stays open for user to click
+				-- No complex state management needed
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
 					f:UnwrapScript(Local.Menu.Pet[i], "OnClick")
 				end
@@ -3376,25 +3366,8 @@ function Necrosis:CreateMenu()
 			for i = 1, #Local.Menu.Buff, 1 do
 				Local.Menu.Buff[i]:SetParent(f)
 				-- Close the menu upon button Click || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Buff[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state", "Ferme")
-					end
-				]])
-				f:WrapScript(Local.Menu.Buff[i], "OnEnter", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", true)
-					end
-				]])
-				f:WrapScript(Local.Menu.Buff[i], "OnLeave", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", false)
-						local stateMenu = self:GetParent():GetAttribute("state")
-						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-							self:GetParent():SetAttribute("state", "Refresh")
-						end
-					end
-				]])
+				-- Simplified for Forever Beta 160001 - menu stays open for user to click
+				-- No complex state management needed
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
 					f:UnwrapScript(Local.Menu.Buff[i], "OnClick")
 				end
@@ -3471,26 +3444,8 @@ function Necrosis:CreateMenu()
 			-- Secure the menu || Maintenant on sécurise le menu, et on y associe nos nouveaux boutons
 			for i = 1, #Local.Menu.Curse, 1 do
 				Local.Menu.Curse[i]:SetParent(f)
-				-- Respond to clicks || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Curse[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state","Ferme")
-					end
-				]])
-				f:WrapScript(Local.Menu.Curse[i], "OnEnter", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", true)
-					end
-				]])
-				f:WrapScript(Local.Menu.Curse[i], "OnLeave", [[
-					if not self.spellUnknown then
-						self:GetParent():SetAttribute("mousehere", false)
-						local stateMenu = self:GetParent():GetAttribute("state")
-						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-							self:GetParent():SetAttribute("state", "Refresh")
-						end
-					end
-				]])
+				-- Simplified for Forever Beta 160001 - menu stays open for user to click
+				-- No complex state management needed
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
 					f:UnwrapScript(Local.Menu.Curse[i], "OnClick")
 				end

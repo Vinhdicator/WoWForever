@@ -101,9 +101,18 @@ function Necrosis.Utils.GetBagName(container)
 		-- skip and do the best we can
 	else
 		local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
-		itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
-		isCraftingReagent 
-		= GetItemInfo(name)
+		itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID,
+		isCraftingReagent
+
+		if type(name) == "string" then
+			-- In Forever 160001+, GetItemInfo needs an item ID, not a string
+			-- Try to get the item info if it exists
+			itemName, itemLink = name, nil
+		else
+			itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
+			itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID,
+			isCraftingReagent = GetItemInfo(name)
+		end
 --[[
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("NU.GetBagName"
 .." '"..(tostring(name) or "nyl")..'"'

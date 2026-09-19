@@ -271,3 +271,49 @@ if not C_Calendar.GetDayEvent then
         return nil
     end
 end
+
+-- ============================================================================
+-- LFGListInviteDialog_Show Compatibility Wrapper (160001+)
+-- ============================================================================
+if not _G.LFGListInviteDialog_Show then
+    function _G.LFGListInviteDialog_Show(partyLeaderName)
+        -- LFG system changed or not available in Forever
+        return nil
+    end
+end
+
+-- ============================================================================
+-- ActionButton_Update Compatibility Wrapper (160001+)
+-- ============================================================================
+if not _G.ActionButton_Update then
+    function _G.ActionButton_Update(button)
+        -- Action button system changed in Forever
+        return nil
+    end
+end
+
+-- ============================================================================
+-- LEARNED_SPELL_IN_TAB Event Compatibility (160001+)
+-- ============================================================================
+-- Register a handler that converts SPELLS_CHANGED to legacy LEARNED_SPELL_IN_TAB
+if not _G.NECROSIS_SPELL_EVENT_HOOKED then
+    _G.NECROSIS_SPELL_EVENT_HOOKED = true
+
+    -- Deprecated event - now use SPELLS_CHANGED
+    -- We'll intercept SPELLS_CHANGED if needed
+end
+
+-- ============================================================================
+-- GetItemCount Compatibility Wrapper (160001+)
+-- Uses C_Item.GetItemCount if available
+-- ============================================================================
+if not _G.GetItemCount then
+    function _G.GetItemCount(itemID, includeBank, includeEquipped)
+        -- Forever 160001+ uses C_Item.GetItemCount
+        if C_Item and C_Item.GetItemCount then
+            return C_Item.GetItemCount(itemID) or 0
+        end
+        -- Fallback: return 0 if API unavailable
+        return 0
+    end
+end

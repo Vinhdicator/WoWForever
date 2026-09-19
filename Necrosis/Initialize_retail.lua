@@ -372,10 +372,12 @@ Necrosis.Config = {
 		[21] = {usage = "soulstone", show = true},
 		[22] = {usage = "summoning", show = true},
 		[23] = {usage = "rit_of_doom", show = false},
-		[24] = {usage = "breath", show = true},
-		[25] = {usage = "eye", show = false},
-		[26] = {usage = "Ritual_of_Souls", show = false},
-		[27] = {usage = "inferno", show = false},
+		[24] = {usage = "armor", show = true},
+		[25] = {usage = "fel_armor", show = true},
+		[26] = {usage = "breath", show = true},
+		[27] = {usage = "eye", show = false},
+		[28] = {usage = "Ritual_of_Souls", show = false},
+		[29] = {usage = "inferno", show = false},
 	},
 	["TimerType"] = 1,
 	["Version"] = "8.5.0",
@@ -1199,7 +1201,9 @@ function Necrosis:Initialize(Config)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.soul_stones then
 						local soulCount = 0
 						for i, v in pairs(Necrosis.Warlock_Lists.soul_stones) do
-							soulCount = soulCount + GetItemCount(v.id)
+							if v.id then
+								soulCount = soulCount + (GetItemCount(v.id) or 0)
+							end
 						end
 						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						local soulText = L["STONE_SOULSTONE_LABEL"]..soulColor..soulCount.."|r"
@@ -1221,7 +1225,9 @@ function Necrosis:Initialize(Config)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
 						local healthCount = 0
 						for i, v in pairs(Necrosis.Warlock_Lists.health_stones) do
-							healthCount = healthCount + GetItemCount(v.id)
+							if v.id then
+								healthCount = healthCount + (GetItemCount(v.id) or 0)
+							end
 						end
 						local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						local healthText = L["STONE_HEALTHSTONE_LABEL"]..healthColor..healthCount.."|r"
@@ -1242,7 +1248,9 @@ function Necrosis:Initialize(Config)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.spell_stones then
 						local spellCount = 0
 						for i, v in pairs(Necrosis.Warlock_Lists.spell_stones) do
-							spellCount = spellCount + GetItemCount(v.id)
+							if v.id then
+								spellCount = spellCount + (GetItemCount(v.id) or 0)
+							end
 						end
 						local spellColor = spellCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						GameTooltip:AddLine(L["STONE_SPELLSTONE_LABEL"]..spellColor..spellCount.."|r")
@@ -1251,7 +1259,9 @@ function Necrosis:Initialize(Config)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.fire_stones then
 						local fireCount = 0
 						for i, v in pairs(Necrosis.Warlock_Lists.fire_stones) do
-							fireCount = fireCount + GetItemCount(v.id)
+							if v.id then
+								fireCount = fireCount + (GetItemCount(v.id) or 0)
+							end
 						end
 						local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						GameTooltip:AddLine(L["STONE_FIRESTONE_LABEL"]..fireColor..fireCount.."|r")
@@ -1259,9 +1269,11 @@ function Necrosis:Initialize(Config)
 
 					-- Infernal Stone (reagent)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.reagents and Necrosis.Warlock_Lists.reagents.infernal_stone then
-						local infernalCount = GetItemCount(Necrosis.Warlock_Lists.reagents.infernal_stone.id)
-						local infernalColor = infernalCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine(L["STONE_INFERNAL_LABEL"]..infernalColor..infernalCount.."|r")
+						if Necrosis.Warlock_Lists.reagents.infernal_stone.id then
+							local infernalCount = GetItemCount(Necrosis.Warlock_Lists.reagents.infernal_stone.id) or 0
+							local infernalColor = infernalCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+							GameTooltip:AddLine(L["STONE_INFERNAL_LABEL"]..infernalColor..infernalCount.."|r")
+						end
 					end
 
 					GameTooltip:Show()

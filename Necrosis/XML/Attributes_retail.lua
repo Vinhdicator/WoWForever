@@ -114,88 +114,45 @@ function Necrosis:MenuAttribute(menu)
 	end
 	
 	-- run at OnLoad of button
-	menuButton:Execute([[ 
-		ButtonList = table.new(self:GetChildren())
-		if self:GetAttribute("state") == "Bloque" then
-			for i, button in ipairs(ButtonList) do
-				button:Show()
-			end
-		else
-			for i, button in ipairs(ButtonList) do
-				button:Hide()
-			end
-		end
-	]])
-
-	menuButton:SetAttribute("_onclick", [[
-		self:SetAttribute("lastClick", button)
-		local Etat = self:GetAttribute("state")
-
-		if  button == "MiddleButton" then
-			-- Handled by type3 macro attribute on main sphere
-		end
-		
-		if  Etat == "Ferme" then
-			if button == "RightButton" then
-				self:SetAttribute("state", "ClicDroit")
-			elseif button == "LeftButton" then
-				self:SetAttribute("state", "Ouvert")
-			end
-		elseif Etat == "Ouvert" then
-			if button == "RightButton" then
-				self:SetAttribute("state", "ClicDroit")
-			elseif button == "LeftButton" then
-				self:SetAttribute("state", "Ferme")
-			end
-		
-		elseif Etat == "Combat" then
-			for i, button in ipairs(ButtonList) do
-				if button:IsShown() then
-					--button:Hide()
-				else
-					--button:Show()
+	if table.new then
+		menuButton:Execute([[
+			ButtonList = table.new(self:GetChildren())
+			if self:GetAttribute("state") == "Bloque" then
+				for i, button in ipairs(ButtonList) do
+					button:Show()
 				end
-			end
-		elseif Etat == "ClicDroit" and button == "LeftButton" then
-			self:SetAttribute("state", "Ferme")
-		
-		end
-		
-		
-	]])
-	
-	menuButton:SetAttribute("_onattributechanged", [[
-		if name == "state" then
-			if value == "Ferme" then
+			else
 				for i, button in ipairs(ButtonList) do
 					button:Hide()
 				end
-			elseif value == "Ouvert" then
-				for i, button in ipairs(ButtonList) do
-					button:Show()
-				end
-				
-				self:SetAttribute("close", self:GetAttribute("close") + 1)
-				-- control:SetTimer(6, self:GetAttribute("close"))
-			elseif value == "Combat" or value == "Bloque" then
-				for i, button in ipairs(ButtonList) do
-					button:Show()
-				end
-			elseif value == "Refresh" then
-				self:SetAttribute("state", "Ouvert")
-			elseif value == "ClicDroit" then
-				for i, button in ipairs(ButtonList) do
-					button:Show()
+			end
+		]])
+	end
+	-- Note: Fallback for Forever 160001+ where table.new doesn't exist
+	-- The button state management is handled via SetAttribute calls instead
+
+	-- Simplified menu handling for Forever Beta 160001
+	-- Buttons hidden by default, toggle visibility on menu button click
+	local children = {menuButton:GetChildren()}
+	for i, child in ipairs(children) do
+		if child then
+			child:Hide()  -- Start hidden
+		end
+	end
+
+	-- Add click handler to toggle menu visibility
+	menuButton:SetScript("OnClick", function(self)
+		local isShown = children[1] and children[1]:IsShown()
+		for i, child in ipairs(children) do
+			if child then
+				if isShown then
+					child:Hide()
+				else
+					child:Show()
 				end
 			end
 		end
-	]])
-	
-	menuButton:SetAttribute("_ontimer", [[
-		if self:GetAttribute("close") <= message and not self:GetAttribute("mousehere") then
-			self:SetAttribute("state", "Ferme")
-		end
-	]])
+	end)
 end
 
 local l_click = 1

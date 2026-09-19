@@ -583,13 +583,15 @@ Necrosis.Warlock_Lists = {
 -- 31=Demon Armor | 47=Fel Armor | 32=Unending Breath | 33=Detect Invis | 34=Eye of Kilrogg | 37=Ritual of Summoning | 38=Soul Link | 43=Shadow Ward | 35=Enslave Demon | 59=Demonic Empowerment | 9=Banish
 --	local buffID = {31, 47, 32, 33, 34, 37, 38, 43, 59, 9}
 	["buffs"] = {
-		[1] = {f_ptr = "breath", high_of = "breath", },
-		[2] = {f_ptr = "eye", high_of = "eye", },
-		[3] = {f_ptr = "summoning", high_of = "summoning", },
-		[4] = {f_ptr = "link", high_of = "link", },
-		[5] = {f_ptr = "ward", high_of = "ward", },
-		[6] = {f_ptr = "banish", high_of = "banish", },
-				
+		[1] = {f_ptr = "armor", high_of = "armor", },  -- Demon Armor
+		[2] = {f_ptr = "fel_armor", high_of = "fel_armor", },  -- Fel Armor
+		[3] = {f_ptr = "breath", high_of = "breath", },
+		[4] = {f_ptr = "eye", high_of = "eye", },
+		[5] = {f_ptr = "summoning", high_of = "summoning", },
+		[6] = {f_ptr = "link", high_of = "link", },
+		[7] = {f_ptr = "ward", high_of = "ward", },
+		[8] = {f_ptr = "banish", high_of = "banish", },
+
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
@@ -623,13 +625,14 @@ Necrosis.Warlock_Lists = {
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList
 	["config_main_spell"] = {
-		[1] = {high_of = "soul_harvest",},	
-		[2] = {high_of = "summoning", },
-		[3] = {high_of = "life_tap", },
-		[4] = {high_of = "ward", },
-		[5] = {high_of = "banish", },
-		[6] = {high_of = "fel_armor", },
-		[7] = {high_of = "death_coil", },			
+		[1] = {high_of = "armor", },  -- Demon Armor
+		[2] = {high_of = "soul_harvest",},
+		[3] = {high_of = "summoning", },
+		[4] = {high_of = "life_tap", },
+		[5] = {high_of = "ward", },
+		[6] = {high_of = "banish", },
+		[7] = {high_of = "fel_armor", },
+		[8] = {high_of = "death_coil", },
 	},
 	["sacrifice"] = { -- demoniac sacrifice
 		[1]  = {f_ptr = "voidwalker", high_of = "sacrifice_demonic_Voidwalker", },

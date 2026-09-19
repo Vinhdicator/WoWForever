@@ -433,7 +433,7 @@ if not eventHandlers[event] then
 eventHandlers[event]={}
 end
 table.insert(eventHandlers[event],handler)
-handler:RegisterEvent(event)
+pcall(function() handler:RegisterEvent(event) end)
 SAO:Debug(Module, "Handling event "..tostring(event).." for "..getHandlerName(handler)..getFromDescription(from))
 end
 function SAO:UnregisterEventHandler(handler,event,from)

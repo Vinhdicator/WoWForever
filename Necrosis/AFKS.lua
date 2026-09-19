@@ -211,10 +211,10 @@ function AFKS:Toggle()
 		self:RegisterEvent("PLAYER_CONTROL_GAINED", "OnEvent")
 		self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS", "OnEvent")
 		if wowVersion == "retail" then
-			self:RegisterEvent("LFG_PROPOSAL_SHOW", "OnEvent")
-			self:RegisterEvent("PARTY_INVITE_REQUEST", "OnEvent")
-			self:RegisterEvent("VIGNETTE_MINIMAP_UPDATED", "OnEvent")
-			self:RegisterEvent("TALKINGHEAD_REQUESTED", "OnEvent")
+			pcall(function() self:RegisterEvent("LFG_PROPOSAL_SHOW", "OnEvent") end)
+			pcall(function() self:RegisterEvent("PARTY_INVITE_REQUEST", "OnEvent") end)
+			pcall(function() self:RegisterEvent("VIGNETTE_MINIMAP_UPDATED", "OnEvent") end)
+			pcall(function() self:RegisterEvent("TALKINGHEAD_REQUESTED", "OnEvent") end)
 		end
 		self:SetScript("OnEvent", function(event, ...)
 			self:OnEvent(...)
@@ -606,11 +606,13 @@ do
 		AFKS:Init()
 
 		if wowVersion == "retail" then
-			hooksecurefunc ("LFGListInviteDialog_Show", function()
-				if not InCombatLockdown() then
-					AFKS:SetAFK(false)
-				end
-			end)
+			if _G.LFGListInviteDialog_Show then
+				hooksecurefunc ("LFGListInviteDialog_Show", function()
+					if not InCombatLockdown() then
+						AFKS:SetAFK(false)
+					end
+				end)
+			end
 		end
 	end
 end

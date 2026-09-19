@@ -1114,30 +1114,30 @@ local function StartInit(fm)
 	-- Firestone
 	local fsButton = _G["NecrosisFirestoneButton"]
 	if fsButton then
-		fsButton:SetAttribute("type", "spell")
+		fsButton:SetAttribute("type1", "spell")
 		local fSpell = Necrosis.GetSpellCastName("firestone")
 		if fSpell then
-			fsButton:SetAttribute("spell", fSpell)
+			fsButton:SetAttribute("spell1", fSpell)
 		end
 	end
 
 	-- Spellstone
 	local ssButton = _G["NecrosisSpellstoneButton"]
 	if ssButton then
-		ssButton:SetAttribute("type", "spell")
+		ssButton:SetAttribute("type1", "spell")
 		local sSpell = Necrosis.GetSpellCastName("spellstone")
 		if sSpell then
-			ssButton:SetAttribute("spell", sSpell)
+			ssButton:SetAttribute("spell1", sSpell)
 		end
 	end
 
 	-- Healthstone
 	local hsButton = _G["NecrosisHealthstoneButton"]
 	if hsButton then
-		hsButton:SetAttribute("type", "spell")
+		hsButton:SetAttribute("type1", "spell")
 		local hSpell = Necrosis.GetSpellCastName("healthstone")
 		if hSpell then
-			hsButton:SetAttribute("spell", hSpell)
+			hsButton:SetAttribute("spell1", hSpell)
 		end
 	end
 
@@ -1146,10 +1146,6 @@ local function StartInit(fm)
 	if soButton then
 		local soSpell = Necrosis.GetSpellCastName("soulstone")
 		if soSpell then
-			-- Basic attributes
-			soButton:SetAttribute("type", "spell")
-			soButton:SetAttribute("spell", soSpell)
-
 			-- Left click: Use item if exists, otherwise cast spell
 			if NecrosisConfig.ItemSwitchCombat[4] then
 				soButton:SetAttribute("type1", "item")
