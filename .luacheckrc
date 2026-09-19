@@ -16,6 +16,13 @@ globals = {
   "Necrosis",
   "NecrosisUI",
   "NUI",
+  -- Compat.lua intentionally creates/shims these WoW namespaces when the
+  -- client version lacks them (classic vs retail), so they are writable here.
+  "C_PetBattles",
+  "C_Club",
+  "C_Calendar",
+  "C_Container",
+  "C_Timer",
 }
 
 -- Third-party libraries vendored in libs/ are not linted
