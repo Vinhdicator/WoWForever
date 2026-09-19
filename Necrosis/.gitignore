@@ -6,3 +6,14 @@ Desktop.ini
 # Editor folders (keep .code-workspace and README/docs tracked)
 .vscode/
 .idea/
+
+# WoW runtime artifacts (this folder is junction-linked into the live AddOns
+# directory, so the game writes state here). Keep these out of version control.
+WTF/
+SavedVariables/
+*.bak
+*.tmp
+Errors/
+Logs/
+Cache/
+
