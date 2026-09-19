@@ -19,9 +19,15 @@ jobs:
           sudo luarocks install luacheck
 
       - name: Run Luacheck
-        # Enforced: the WoW API surface is provided via wow_api_globals.lua,
-        # so only genuine problems (typos, undefined vars, unused locals) fail.
-        run: luacheck Necrosis --config .luacheckrc --no-color
+        # Enforced on errors (exit code 2+): the WoW API surface is provided via
+        # wow_api_globals.lua, so genuine problems (typos, undefined vars,
+        # invalid escapes, syntax errors) fail the build. Warnings (exit 1) are
+        # reported in the log but do not fail. Codes: 0=ok 1=warnings 2=errors
+        # 3=critical.
+        run: |
+          luacheck Necrosis --config .luacheckrc --no-color; code=$?
+          echo "luacheck exit code: $code"
+          if [ "$code" -ge 2 ]; then exit "$code"; fi
 
   stylua:
     name: StyLua (format check)
