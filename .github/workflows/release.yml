@@ -15,13 +15,10 @@ jobs:
 
       - name: Package and release with BigWigs packager
         uses: BigWigsMods/packager@v2
-        with:
-          # -t points release.sh's topdir at the Necrosis/ subfolder, where the
-          # .toc files actually live (repo root only holds project scaffolding).
-          # No -g flags: the per-flavor .toc files (Necrosis.toc,
-          # Necrosis_Vanilla.toc, _TBC, _Wrath, _Cata, _MOP, retail) let the
-          # packager auto-detect every supported game version.
-          args: -t Necrosis
+        # Runs at the repo/checkout root (where .git and .pkgmeta live).
+        # .pkgmeta uses move-folders to bring the Necrosis/ subfolder up to the
+        # package root so the per-flavor .toc files are found and every
+        # supported game version is auto-detected (no -g flags).
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           # Uncomment and add these secrets to publish to CurseForge/Wago:

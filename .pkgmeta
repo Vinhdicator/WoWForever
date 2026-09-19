@@ -1,1 +1,14 @@
 package-as: Necrosis
+
+# The addon source lives in the Necrosis/ subfolder of this repo, so move it up
+# to the package root. The packager then finds Necrosis.toc (and the per-flavor
+# .toc files) at the top level and zips them as the addon.
+move-folders:
+  Necrosis: NecrosisAddon
+
+ignore:
+  - Necrosis/.github
+  - Necrosis/.luacheckrc
+  - Necrosis/stylua.toml
+  - Necrosis/wow_api_globals.lua
+  - Necrosis/Necrosis.code-workspace
