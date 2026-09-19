@@ -1,9 +1,10 @@
-## Interface: 11601
+## Interface: 160001
 ## X-Min-Interface: 110207
-## X-Min-Interface-Classic: 11508,11601
+## X-Min-Interface-Classic: 11508,160001
 ## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
 ## X-Min-Interface-Cata: 40400
+## X-Min-Interface-Forever: 160001
 
 ## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Vanilla
 ## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Vanilla (Русский)
